@@ -12,9 +12,10 @@ export default function Application(){
         if(currentSection === 'content') return <ContentSection/>
         else if(currentSection === 'customize') return <CustomizeSection/>
     }
+
     return (
-        <>
-        <div className='edit-container'>
+    <>
+    <div className='edit-container'>
       <ContentCustomizeBtn section={nextSection}/>
     </div>
     <div className='edit-cv-container'>
@@ -22,6 +23,6 @@ export default function Application(){
         {setSection()}
     </div>
     <div className='cv-container'></div>
-        </>
+    </>
     );
 }
