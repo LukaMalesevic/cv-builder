@@ -6,10 +6,11 @@ import { useState } from "react";
 
 export default function Application(){
     const [currentSection, nextSection] = useState('content');
+    let [currentEducationList, updateEducationList] = useState([]);
 
     function setSection()
     {
-        if(currentSection === 'content') return <ContentSection/>
+        if(currentSection === 'content') return <ContentSection currentEducationList={currentEducationList} updateEducationList={updateEducationList} />
         else if(currentSection === 'customize') return <CustomizeSection/>
     }
 

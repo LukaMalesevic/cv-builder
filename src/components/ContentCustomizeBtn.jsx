@@ -26,7 +26,7 @@ function SetButton(props) {
     }
 
     return (
-        <button onFocus={() => nextFocus(true)} onBlur={() => nextFocus(false)} className={props.className} style={buttonStyle}>
+        <button onFocus={() => nextFocus(!currentFocus)} onBlur={() => nextFocus(false)} className={props.className} style={buttonStyle}>
             <i className={props.icon}></i>
             <h1>{props.name}</h1>
         </button>

@@ -1,14 +1,21 @@
 import Education from "./Education";
 import Experience from "./Experience";
 import PersonalDetails from "./PersonalDetails";
+import PropTypes from 'prop-types';
 
-export default function ContentSection()
+ContentSection.propTypes = {
+    currentEducationList: PropTypes.array.isRequired,
+    updateEducationList: PropTypes.func.isRequired
+};
+
+export default function ContentSection(props)
 {
     return(
         <div className="content-section">
             <PersonalDetails/>
-            <Education/>
+            <Education currentEducationList={props.currentEducationList} updateEducationList={props.updateEducationList}/>
             <Experience/>
         </div>
     );
 }
+

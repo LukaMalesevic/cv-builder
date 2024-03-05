@@ -10,8 +10,9 @@
   --default-border-radius: 15px;
   --gray: #F0F0F0;
   --dark-red: #B91C1C;
-  --defaultS-box-shadow: 0px 0px 12px -4px rgba(0,0,0,0.75);
-
+  --blue: #187FF5;
+  /* --defaultS-box-shadow: 0px 0px 12px -4px rgba(0,0,0,0.75); */
+  --defaultS-box-shadow: none;
 }
 
 button{
@@ -32,7 +33,7 @@ body{
 
 #root{
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   padding-top: 30px;
@@ -48,11 +49,12 @@ body{
 
 .edit-cv-container{
   width: 505px;
-  height: 100vh;
+  height: auto;
   background-color: #F3F4F6;
   display: flex;
   flex-direction: column;
   gap: 30px;
+  margin-bottom: 100px;
 }
 
 .cv-container{
@@ -98,7 +100,7 @@ i{
 .clear-load-btn{
   width: 100%;
   background-color: white;
-  height: 55px;
+  min-height: 55px;
   border-radius: var(--default-border-radius);
   box-shadow: var(--defaultS-box-shadow);
   display: flex;
@@ -137,7 +139,7 @@ i{
   background-color: blue;
 }
 
-.personal-details-container{
+.personal-details-container, .education-details-container{
   width: 100%;
   height: 400px;
   border-radius: var(--default-border-radius);
@@ -150,7 +152,16 @@ i{
   justify-content: space-between;
 }
 
-.personal-details-container > h1{
+.education-details-container{
+  position: relative;
+  top: -120px;
+  box-shadow: none;
+  margin-bottom: -120px;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.personal-details-container > h1, .education-details-container > h1{
   font-size: 2.5rem;
   font-weight: 600;
 }
@@ -197,11 +208,12 @@ label{
   box-shadow: var(--defaultS-box-shadow);
   background-color: white;
   position: relative;
-  padding: 0 25px 0 25px;
+  padding: 25px 25px 0 25px;
   box-sizing: border-box;
   display: flex;
-  align-items: center;
   cursor: pointer;
+  transition: 0.2s ease;
+  z-index: 0;
 }
 
 .education-container > i, .experience-container > i{
@@ -218,4 +230,108 @@ label{
   position: absolute;
   right: 25px;
   font-size: 1.35rem !important;
+  transition: 0.3s ease;
+}
+
+.add-subsection-btn{
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 125px;
+  height: 40px;
+  border-radius: 30px;
+  border: 5px solid var(--gray);
+  background-color: white;
+  visibility: hidden;
+}
+
+.half-width{
+  width: 48%;
+}
+
+.full-width{
+  width: 100%;
+}
+
+.delete-save-btn-container{
+  width: 100%;
+  height: 35px;
+  margin-top: 10px;
+}
+
+.delete-btn{
+  width: auto;
+  height: 35px;
+  float: left;
+  border-radius: 5px !important;
+  border: 1px solid gray;
+  background-color: white;
+  color: grey;
+  padding: 0 15px 0 15px;
+}
+
+.cancel-btn{
+  width: auto;
+  height: 35px;
+  float: right;
+  border-radius: 5px !important;
+  border: 1px solid gray;
+  background-color: white;
+  color: grey;
+  font-size: 1.4rem;
+  padding: 0 15px 0 15px;
+}
+
+.save-btn{
+  width: auto;
+  height: 35px;
+  float: right;
+  border-radius: 5px !important;
+  background-color: var(--blue);
+  color: white;
+  margin-left: 15px;
+  font-size: 1.4rem;
+  padding: 0 15px 0 15px;
+}
+
+.add-section-container{
+  width: 100%;
+  background-color: white;
+  border-bottom-left-radius: var(--default-border-radius);
+  border-bottom-right-radius: var(--default-border-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -35px;
+  height: 0;
+  visibility: hidden;
+  transition: 0.3s;
+}
+
+.edu-section-container
+{
+  margin-bottom: 10px;
+  margin-top: -25px;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.section{
+  width: 100%;
+  height: 60px;
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px 0 15px;
+  box-sizing: border-box;
+}
+
+.section > h1{
+  font-size: 2rem;
 }
