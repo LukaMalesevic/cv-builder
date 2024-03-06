@@ -125,7 +125,7 @@ i{
   background-color: var(--gray) !important;
 }
 
-.content-section{
+.content-section, form{
   width: 100%;
   height: auto;
   display: flex;
@@ -150,10 +150,12 @@ i{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  z-index: 1;
 }
 
 .education-details-container{
   position: relative;
+  padding-top: 40px;
   top: -120px;
   box-shadow: none;
   margin-bottom: -120px;
@@ -293,6 +295,8 @@ label{
   margin-left: 15px;
   font-size: 1.4rem;
   padding: 0 15px 0 15px;
+  border: none;
+  cursor: pointer;
 }
 
 .add-section-container{
@@ -315,7 +319,7 @@ label{
   margin-top: -25px;
   width: 100%;
   height: auto;
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 5px;
 }
@@ -330,8 +334,12 @@ label{
   justify-content: space-between;
   padding: 0 15px 0 15px;
   box-sizing: border-box;
+  cursor: pointer;
 }
 
 .section > h1{
   font-size: 2rem;
 }
+
+
+
