@@ -23,6 +23,7 @@ export default function Education(props){
     let [currentSubsection, nextSubsection] = useState(false);
     let [currentFormState, nextFormState] = useState(false);
     let [currentEduListState, nextEduListState] = useState(false);
+    let [currentUpdateState, nextUpdateState] = useState(false);
     let education = new EducationList(props.currentEducationList.length);
     let [currentEduEdit, nextEduEdit] = useState(education);
     let sectionStyle;
@@ -37,6 +38,7 @@ export default function Education(props){
         nextEduEdit(props.currentEducationList[currentId]);
         nextEduListState(false);
         nextFormState(true);
+        nextUpdateState(true);
     }
 
     function showEducationList(element){
@@ -53,6 +55,28 @@ export default function Education(props){
     function addEducation(education){
         props.currentEducationList.push(education);
         props.updateEducationList(props.currentEducationList);
+    }
+
+    function updateEducation(education){
+        let newEducationList = [...props.currentEducationList];
+        newEducationList[currentEduEdit.id].school = education.school;
+        newEducationList[currentEduEdit.id].degree = education.degree;
+        newEducationList[currentEduEdit.id].startDate = education.startDate;
+        newEducationList[currentEduEdit.id].endDate = education.endDate;
+        newEducationList[currentEduEdit.id].location = education.location;
+
+        let newEducation = new EducationList(props.currentEducationList.length);
+        nextEduEdit(newEducation);
+        props.updateEducationList(newEducationList);
+    }
+
+    function deleteEducation(){
+        let newEducationList = [...props.currentEducationList];
+        newEducationList[currentEduEdit.id].id = null;
+
+        let newEducation = new EducationList(props.currentEducationList.length);
+        nextEduEdit(newEducation);
+        props.updateEducationList(newEducationList);
     }
 
     if(currentSubsection){
@@ -97,7 +121,15 @@ export default function Education(props){
         }
     }
 
-    // console.log(props.currentEducationList);
+    if(currentUpdateState)
+    {
+        education.school = currentEduEdit.school;
+        education.degree = currentEduEdit.degree;
+        education.startDate = currentEduEdit.startDate;
+        education.endDate = currentEduEdit.endDate;
+        education.location = currentEduEdit.location;
+    }
+    
         return (
         <form>
         <div onClick={() => {
@@ -113,12 +145,16 @@ export default function Education(props){
             {props.currentEducationList.map((element) => showEducationList(element))}
         </div>
         <div className="add-section-container" style={sectionStyle}>
-        <button type="reset" onClick={() => {
+        <input type="reset" onClick={() => {
             currentSubsection = !currentSubsection;
-            currentEduEdit = education;
+            currentEduEdit.school = '';
+            currentEduEdit.degree = '';
+            currentEduEdit.startDate = '';
+            currentEduEdit.endDate = '';
+            currentEduEdit.location = '';
             nextEduListState(!currentEduListState);
             return nextFormState(!currentFormState);
-        }} className="add-subsection-btn" style={openFormBtnStyle}><i className="fa-solid fa-plus"></i>Education</button>
+        }} className="add-subsection-btn" style={openFormBtnStyle} value={'+ Education'}/>
         </div>
         <div className="education-details-container" style={educationFormStyle}>
             <div className="input-container full-width">
@@ -142,18 +178,31 @@ export default function Education(props){
                 <input defaultValue={currentEduEdit.location} onChange={(event)=> education.location = event.target.value } type="text" placeholder="Enter location"/>
             </div>
             <div className="delete-save-btn-container">
-                <button className="delete-btn"><i className="fa-solid fa-trash"></i> Delete</button>
+                <button type="reset" onClick={() => {
+                    if(currentUpdateState){
+                        deleteEducation();
+                    }
+                    nextUpdateState(false);
+                    currentSubsection = !currentSubsection;
+                    nextEduListState(!currentEduListState);
+                    return nextFormState(!currentFormState)
+
+                }} className="delete-btn"><i className="fa-solid fa-trash"></i> Delete</button>
                 <input onClick={() =>{
-                    //CHECK IF CURRENT ID IS SAME AS ARRAY.LENGHT-1 IF YES ADD IF NOT REPLACE THAT ONE
-                    addEducation(education);
+                    
+                    if(currentUpdateState){
+                        updateEducation(education);
+                        nextUpdateState(false);
+                    }
+                    else addEducation(education);
                     nextEduListState(!currentEduListState);
                     return nextFormState(false);
                 }} className="save-btn" type="reset" value={'Save'}/>
-                <button onClick={() => { 
-                    event.preventDefault();
+                <input onClick={() => { 
+                    nextUpdateState(false);
                     currentSubsection = !currentSubsection;
                     nextEduListState(!currentEduListState);
-                    return nextFormState(!currentFormState)}} className="cancel-btn">Cancel</button>
+                    return nextFormState(!currentFormState)}} type="reset" className="cancel-btn" value={'Cancel'}/>
             </div>
         </div>
         </form>
