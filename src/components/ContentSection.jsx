@@ -5,7 +5,9 @@ import PropTypes from 'prop-types';
 
 ContentSection.propTypes = {
     currentEducationList: PropTypes.array.isRequired,
-    updateEducationList: PropTypes.func.isRequired
+    updateEducationList: PropTypes.func.isRequired,
+    currentExperienceList: PropTypes.array.isRequired,
+    updateExperienceList: PropTypes.func.isRequired
 };
 
 export default function ContentSection(props)
@@ -14,7 +16,7 @@ export default function ContentSection(props)
         <div className="content-section">
             <PersonalDetails/>
             <Education currentEducationList={props.currentEducationList} updateEducationList={props.updateEducationList}/>
-            <Experience/>
+            <Experience currentExperienceList={props.currentExperienceList} updateExperienceList={props.updateExperienceList}/>
         </div>
     );
 }
