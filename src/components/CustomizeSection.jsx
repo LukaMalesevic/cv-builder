@@ -1,4 +1,5 @@
 import Color from "./Color";
+import Fonts from "./Fonts";
 import Layout from "./Layout";
 import PropTypes from 'prop-types';
 
@@ -20,12 +21,14 @@ export default function CustomizeSection(props)
                 nextLayout={props.nextLayout}
                 currentColor={props.currentColor}
                 nextColor={props.nextColor} 
-                // currentFont={props.currentFont}
-                // nextFont={props.nextFont}
             />
             <Color
                 currentColor={props.currentColor}
                 nextColor={props.nextColor} 
+            />
+            <Fonts 
+                currentFont={props.currentFont}
+                nextFont={props.nextFont}
             />
 
         </div>
