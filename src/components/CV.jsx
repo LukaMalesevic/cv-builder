@@ -30,6 +30,9 @@ export default function CV(props){
     let eduValidation = false;
     let expValidation = false;
     let detailsTextStyle;
+    let titlestyle = {
+        color:  props.currentColor
+    };
 
     if(props.currentLayout === 'left' || props.currentLayout === 'right'){
         detailsTextStyle = {
@@ -50,7 +53,7 @@ export default function CV(props){
             return(
                 <div className='align-center'>
                 <div className='content-title'>
-                    <h1>Education</h1>
+                    <h1 style={titlestyle} >Education</h1>
                 </div>
                 <div className='date-place-text'>
                     <h2>{section.startDate} - {section.endDate}</h2>
@@ -87,7 +90,7 @@ export default function CV(props){
             return(
                 <div className='align-center'>
                 <div className='content-title'>
-                    <h1>Experience</h1>
+                    <h1 style={titlestyle}>Experience</h1>
                 </div>
                 <div className='date-place-text'>
                     <h2>{section.startDate} - {section.endDate}</h2>
