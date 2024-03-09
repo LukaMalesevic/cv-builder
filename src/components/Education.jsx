@@ -32,33 +32,67 @@ export default function Education(props){
     let educationFormStyle;
     let eduListStyle;
 
-    function handleEditSection(event)
-    {
+    function handleEditSection(event){
         let currentId = event.target.getAttribute('data-key');
+        if(currentId < 0)
+        {
+            currentId *= -1;
+            currentId--;
+        }
         nextEduEdit(props.currentEducationList[currentId]);
         nextEduListState(false);
         nextFormState(true);
         nextUpdateState(true);
     }
 
+    function handleEyeDisplay(event){
+        let currentId = event.target.getAttribute('data-key');
+        let newEducationList = [...props.currentEducationList];
+        if(currentId >= 0){
+            let altId = currentId;
+            currentId++;
+            currentId *= -1;
+            newEducationList[altId].id = currentId;
+        }else if(currentId < 0)
+        {
+            currentId *= -1;
+            currentId--;
+            newEducationList[currentId].id = currentId;
+        }
+        props.updateEducationList(newEducationList);
+        
+    }
+
     function showEducationList(element){
+        let classOfEye = 'fa-solid fa-eye eye';
+        if(element.id < 0) classOfEye = 'fa-solid fa-eye-slash eye';
+        
         if(element.id !== null)
         return(
+            <>
             <div key={element.id} data-key={element.id} className="section" onClick={(event) => handleEditSection(event)}>
                 <h1>{element.school}</h1>
-                <i className="fa-solid fa-eye"></i>
             </div>
+            <i data-key={element.id} onClick={(event) => handleEyeDisplay(event)} className={classOfEye}></i>
+            </>
         );
         else if(element.id === null) return null;
     }
 
     function addEducation(education){
-        props.currentEducationList.push(education);
-        props.updateEducationList(props.currentEducationList);
+        let newEducationList = [...props.currentEducationList];
+        newEducationList.push(education)
+        props.updateEducationList(newEducationList);
     }
 
     function updateEducation(education){
         let newEducationList = [...props.currentEducationList];
+
+        if(currentEduEdit.id < 0)
+        {
+            currentEduEdit.id *= -1;
+            currentEduEdit.id--;
+        }
         newEducationList[currentEduEdit.id].school = education.school;
         newEducationList[currentEduEdit.id].degree = education.degree;
         newEducationList[currentEduEdit.id].startDate = education.startDate;
@@ -72,6 +106,11 @@ export default function Education(props){
 
     function deleteEducation(){
         let newEducationList = [...props.currentEducationList];
+        if(currentEduEdit.id < 0)
+        {
+            currentEduEdit.id *= -1;
+            currentEduEdit.id--;
+        }
         newEducationList[currentEduEdit.id].id = null;
 
         let newEducation = new EducationList(props.currentEducationList.length);

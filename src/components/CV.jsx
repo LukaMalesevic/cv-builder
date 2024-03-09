@@ -29,10 +29,22 @@ export default function CV(props){
     let textStyle;
     let eduValidation = false;
     let expValidation = false;
+    let detailsTextStyle;
 
-    function setEducation(section, index){
+    if(props.currentLayout === 'left' || props.currentLayout === 'right'){
+        detailsTextStyle = {
+            maxWidth: '150px',
+            minWidth: '150px'
+        }
+    }else if(props.currentLayout === 'top'){
+        detailsTextStyle = {
+            minWidth: '505px'
+        }
+    }
 
-        if(section.id !== null && eduValidation === false)
+    function setEducation(section){
+
+        if((section.id !== null && section.id >= 0) && eduValidation === false)
         {
             eduValidation = true;
             return(
@@ -41,12 +53,25 @@ export default function CV(props){
                     <h1>Education</h1>
                 </div>
                 <div className='date-place-text'>
-                    {section.startDate} {section.endDate}
-                    {section.location}
+                    <h2>{section.startDate} - {section.endDate}</h2>
+                    <h2>{section.location}</h2>
                 </div>
-                <div className='details-text'>
-                    {section.school}
-                    {section.degree}
+                <div className='details-text' style={detailsTextStyle}>
+                    <h2 className='bold'>{section.school}</h2>
+                    <h2>{section.degree}</h2>
+                </div>
+                </div>
+            );
+        }else if(section.id !== null && section.id >= 0){
+            return(
+                <div className='align-center'>
+                <div className='date-place-text'>
+                    <h2>{section.startDate} - {section.endDate}</h2>
+                    <h2>{section.location}</h2>
+                </div>
+                <div className='details-text' style={detailsTextStyle}>
+                    <h2 className='bold'>{section.school}</h2>
+                    <h2>{section.degree}</h2>
                 </div>
                 </div>
             );
@@ -54,9 +79,44 @@ export default function CV(props){
    
     }
     
-    // function setExperience(section){
-    
-    // }
+    function setExperience(section){
+        
+        if((section.id !== null && section.id >= 0) && expValidation === false)
+        {
+            expValidation = true;
+            return(
+                <div className='align-center'>
+                <div className='content-title'>
+                    <h1>Experience</h1>
+                </div>
+                <div className='date-place-text'>
+                    <h2>{section.startDate} - {section.endDate}</h2>
+                    <h2>{section.location}</h2>
+                </div>
+                <div className='details-text' style={detailsTextStyle}>
+                    <h2 className='bold'>{section.company}</h2>
+                    <h2>{section.position}</h2>
+                    <h2>{section.description}</h2>
+                </div>
+                </div>
+            );
+        }else if(section.id !== null && section.id >= 0){
+            return(
+                <div className='align-center'>
+                <div className='date-place-text'>
+                    <h2>{section.startDate} - {section.endDate}</h2>
+                    <h2>{section.location}</h2>
+                </div>
+                <div className='details-text' style={detailsTextStyle}>
+                    <h2 className='bold'>{section.company}</h2>
+                    <h2>{section.position}</h2>
+                    <h2>{section.description}</h2>
+                </div>
+                </div>
+            );
+        }
+   
+    }
     
 
     if(props.currentLayout === 'top'){
@@ -64,6 +124,7 @@ export default function CV(props){
             width: '100%',
             minHeight: '25px',
             padding: '40px 0 30px 0',
+            boxSizing: 'border-box',
             backgroundColor: props.currentColor,
             fontFamily: props.currentFont
         }
@@ -72,7 +133,6 @@ export default function CV(props){
             flexDirection: 'row'
         }
         textStyle = {
-            width: '100%',
             minHeight: '100px',
             padding: '40px 0 30px 0',
             fontFamily: props.currentFont
@@ -82,6 +142,7 @@ export default function CV(props){
             width: '40%',
             minHeight: '100%',
             padding: '40px 20px 30px 20px',
+            boxSizing: 'border-box',
             float: 'left',
             backgroundColor: props.currentColor,
             fontFamily: props.currentFont
@@ -93,15 +154,18 @@ export default function CV(props){
         textStyle = {
             width: '60%',
             minHeight: '100px',
-            padding: '40px 20px 30px 20px',
+            padding: '40px 1px 30px 0px',
             fontFamily: props.currentFont,
-            float: 'right'
+            float: 'right',
+            position: 'relative',
+            top: '-100%'
         }
     }else if(props.currentLayout === 'right'){
         layoutStyle = {
             width: '40%',
             minHeight: '100%',
             padding: '40px 20px 30px 20px',
+            boxSizing: 'border-box',
             float: 'right',
             backgroundColor: props.currentColor,
             fontFamily: props.currentFont
@@ -113,9 +177,11 @@ export default function CV(props){
         textStyle = {
             width: '60%',
             minHeight: '100px',
-            padding: '40px 20px 30px 20px',
+            padding: '40px 1px 30px 0px',
             fontFamily: props.currentFont,
-            float: 'left'
+            float: 'left',
+            position: 'relative',
+            top: '-100%'
         }
     }
 
@@ -129,9 +195,9 @@ export default function CV(props){
                 <h2>{props.currentAddress !== '' ? <i className="fa-solid fa-location-dot"></i> : null}  {props.currentAddress}</h2>
             </div>
         </div>
-        <div style={textStyle}>
+        <div className='align-center' style={textStyle}>
             {props.currentEducationList.map((element, index) => setEducation(element, index))}
-            {/* {props.currentExperienceList.map((element, index) => setExperience(element, index))} */}
+            {props.currentExperienceList.map((element, index) => setExperience(element, index))}
         </div>
         </>
     );

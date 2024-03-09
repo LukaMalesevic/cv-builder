@@ -33,33 +33,68 @@ export default function Experience(props){
     let experienceFormStyle;
     let ExpListStyle;
 
-    function handleEditSection(event)
-    {
+    function handleEditSection(event){
         let currentId = event.target.getAttribute('data-key');
+        if(currentId < 0)
+        {
+            currentId *= -1;
+            currentId--;
+        }
         nextExpEdit(props.currentExperienceList[currentId]);
         nextExpListState(false);
         nextFormState(true);
         nextUpdateState(true);
     }
 
+    function handleEyeDisplay(event){
+        let currentId = event.target.getAttribute('data-key');
+        let newExperienceList = [...props.currentExperienceList];
+        if(currentId >= 0){
+            let altId = currentId;
+            currentId++;
+            currentId *= -1;
+            newExperienceList[altId].id = currentId;
+        }else if(currentId < 0)
+        {
+            currentId *= -1;
+            currentId--;
+            newExperienceList[currentId].id = currentId;
+        }
+        props.updateExperienceList(newExperienceList);
+        
+    }
+
+
     function showExperienceList(element){
+        let classOfEye = 'fa-solid fa-eye eye';
+        if(element.id < 0) classOfEye = 'fa-solid fa-eye-slash eye';
+
         if(element.id !== null)
         return(
+            <>
             <div key={element.id} data-key={element.id} className="section" onClick={(event) => handleEditSection(event)}>
                 <h1>{element.company}</h1>
-                <i className="fa-solid fa-eye"></i>
             </div>
+            <i data-key={element.id} onClick={(event) => handleEyeDisplay(event)} className={classOfEye}></i>
+            </>
         );
         else if(element.id === null) return null;
     }
 
     function addExperience(experience){
-        props.currentExperienceList.push(experience);
-        props.updateExperienceList(props.currentExperienceList);
+        let newExperienceList = [...props.currentExperienceList];
+        newExperienceList.push(experience)
+        props.updateExperienceList(newExperienceList);
     }
 
     function updateExperience(experience){
         let newExperienceList = [...props.currentExperienceList];
+        
+        if(currentExpEdit.id < 0)
+        {
+            currentExpEdit.id *= -1;
+            currentExpEdit.id--;
+        }
         newExperienceList[currentExpEdit.id].company = experience.company;
         newExperienceList[currentExpEdit.id].position = experience.position;
         newExperienceList[currentExpEdit.id].startDate = experience.startDate;
@@ -74,6 +109,11 @@ export default function Experience(props){
 
     function deleteExperience(){
         let newExperienceList = [...props.currentExperienceList];
+        if(currentExpEdit.id < 0)
+        {
+            currentExpEdit.id *= -1;
+            currentExpEdit.id--;
+        }
         newExperienceList[currentExpEdit.id].id = null;
 
         let newExperience = new ExperienceList(props.currentExperienceList.length);
